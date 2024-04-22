@@ -1,0 +1,5 @@
+/.idea/
+/vsphere.home.lan/terraform.tfstate
+/vsphere.home.lan/terraform.tfstate.backup
+/vsphere.home.lan/.terraform/
+/vsphere.home.lan/.terraform.lock.hcl
