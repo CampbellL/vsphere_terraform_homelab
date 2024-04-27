@@ -14,7 +14,7 @@ jobs:
     image: hashicorp/terraform:latest
     interpreter: !DefaultInterpreter
       commands: |
-        ls -al
+        cd vsphere.home.lan
         terraform plan
     useTTY: true
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
