@@ -15,6 +15,7 @@ jobs:
     interpreter: !DefaultInterpreter
       commands: |
         cd vsphere.home.lan
+        terraform init
         terraform plan
     useTTY: true
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
