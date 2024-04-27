@@ -14,8 +14,10 @@ jobs:
     image: hashicorp/terraform:latest
     interpreter: !DefaultInterpreter
       commands: |
-        export TF_VAR_vsphere_user="@secret:VSphere_User@"
-        export TF_VAR_vsphere_pw="@secret:VSphere_PW@"
+        export TF_VAR_vsphere_user="@secret:VSPHERE_USER@"
+        export TF_VAR_vsphere_pw="@secret:VSPHERE_PW@"
+        gcp.json >> "@secret:GOOGLE_APPLICATION_CREDENTIALS@"
+        export GOOGLE_APPLICATION_CREDENTIALS="$pwd/gcp.json"
         cd vsphere.home.lan
         terraform init
         terraform plan
