@@ -75,12 +75,6 @@ resource "vsphere_folder" "linux_servers_folder" {
   datacenter_id = vsphere_datacenter.homelab_datacenter.moid
 }
 
-resource "vsphere_folder" "playground_folder" {
-  path          = "Playground"
-  type          = "vm"
-  datacenter_id = vsphere_datacenter.homelab_datacenter.moid
-}
-
 resource "vsphere_folder" "windows_servers_folder" {
   path          = "Windows Servers"
   type          = "vm"
