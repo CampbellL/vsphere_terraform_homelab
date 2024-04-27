@@ -8,10 +8,13 @@ jobs:
     withLfs: false
     withSubmodules: false
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
-  - !RunContainerStep
+  - !CommandStep
     name: Terraform
-    image: hashicorp/terraform:latest
-    args: plan
+    runInContainer: true
+    image: ubuntu:rolling
+    interpreter: !DefaultInterpreter
+      commands: |
+        apt install -y terraform
     useTTY: true
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   retryCondition: never
