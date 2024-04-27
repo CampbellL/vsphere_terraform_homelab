@@ -19,6 +19,7 @@ jobs:
         echo -n "@secret:GOOGLE_APPLICATION_CREDENTIALS@" >> gcp.json
         cat "$PWD/gcp.json"
         export GOOGLE_APPLICATION_CREDENTIALS="$PWD/gcp.json"
+		echo $GOOGLE_APPLICATION_CREDENTIALS
         cd vsphere.home.lan
         terraform init
         terraform plan
