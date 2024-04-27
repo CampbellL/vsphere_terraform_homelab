@@ -17,9 +17,7 @@ jobs:
         export TF_VAR_vsphere_user="@secret:VSPHERE_USER@"
         export TF_VAR_vsphere_pw="@secret:VSPHERE_PW@"
         echo -n "@secret:GOOGLE_APPLICATION_CREDENTIALS@" >> gcp.json
-        cat gcp.json
-        creds_path = "$pwd/gcp.json"
-        export GOOGLE_APPLICATION_CREDENTIALS=$creds_path
+        export GOOGLE_APPLICATION_CREDENTIALS="$PWD/gcp.json"
         cd vsphere.home.lan
         terraform init
         terraform plan
