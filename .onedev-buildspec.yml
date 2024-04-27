@@ -14,6 +14,8 @@ jobs:
     image: hashicorp/terraform:latest
     interpreter: !DefaultInterpreter
       commands: |
+        export TF_VAR_vsphere_pw="@secret:VSphere_User@"
+        export TF_VAR_vsphere_user="@secret:VSphere_PW@"
         cd vsphere.home.lan
         terraform init
         terraform plan
