@@ -14,7 +14,9 @@ jobs:
     image: ubuntu:rolling
     interpreter: !DefaultInterpreter
       commands: |
-        apt install -y terraform
+        snap install --classic opentofu
+        tofu init
+        tofu plan
     useTTY: true
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   retryCondition: never
