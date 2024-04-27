@@ -56,7 +56,23 @@ jobs:
     useTTY: true
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
   triggers:
-  - !PullRequestMergeTrigger
+  - !BranchUpdateTrigger
+    branches: main
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
+- name: Push Mirror to Github
+  steps:
+  - !PushRepository
+    name: Push Mirror to Github
+    remoteUrl: https://github.com/CampbellL/vsphere_terraform_homelab.git
+    userName: lcampbell
+    passwordSecret: GITHUB_PUSH_MIRROR_TOKEN
+    force: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger
     branches: main
   retryCondition: never
   maxRetries: 3
