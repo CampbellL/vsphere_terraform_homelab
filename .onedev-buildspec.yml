@@ -11,7 +11,7 @@ jobs:
   - !CommandStep
     name: Terraform
     runInContainer: true
-    image: terraform:latest
+    image: hashicorp/terraform:latest
     interpreter: !DefaultInterpreter
       commands: |
         ls -al
