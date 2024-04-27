@@ -1,6 +1,6 @@
 version: 32
 jobs:
-- name: Terraform Apply
+- name: Terraform Plan
   steps:
   - !CheckoutStep
     name: Checkout
@@ -25,6 +25,40 @@ jobs:
         terraform plan
     useTTY: true
     condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !PullRequestUpdateTrigger {}
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
+- name: Terraform Apply
+  steps:
+  - !CheckoutStep
+    name: Checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: Terraform
+    runInContainer: true
+    image: hashicorp/terraform:latest
+    interpreter: !DefaultInterpreter
+      commands: |
+        export TF_VAR_vsphere_user="@secret:VSPHERE_USER@"
+        export TF_VAR_vsphere_pw="@secret:VSPHERE_PW@"
+        echo "@secret:GOOGLE_APPLICATION_CREDENTIALS@" | base64 -d >> homelab-420221-85a9ad963325.json
+        cat /onedev-build/workspace/homelab-420221-85a9ad963325.json
+        export GOOGLE_APPLICATION_CREDENTIALS="$PWD/homelab-420221-85a9ad963325.json"
+        echo $GOOGLE_APPLICATION_CREDENTIALS
+        cd vsphere.home.lan
+        terraform init
+        terraform apply -auto-approve
+    useTTY: true
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !PullRequestMergeTrigger
+    branches: main
   retryCondition: never
   maxRetries: 3
   retryDelay: 30
