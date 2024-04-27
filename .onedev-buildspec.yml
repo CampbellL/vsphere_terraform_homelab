@@ -1,0 +1,29 @@
+version: 32
+jobs:
+- name: Terraform Apply
+  steps:
+  - !CheckoutStep
+    name: Checkout
+    cloneCredential: !DefaultCredential {}
+    withLfs: false
+    withSubmodules: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  - !CommandStep
+    name: Terraform
+    runInContainer: true
+    image: hashicorp/terraform:latest
+    interpreter: !DefaultInterpreter
+      commands: |
+        export TF_VAR_vsphere_user="@secret:VSPHERE_USER@"
+        export TF_VAR_vsphere_pw="@secret:VSPHERE_PW@"
+        gcp.json >> "@secret:GOOGLE_APPLICATION_CREDENTIALS@"
+        export GOOGLE_APPLICATION_CREDENTIALS="$pwd/gcp.json"
+        cd vsphere.home.lan
+        terraform init
+        terraform plan
+    useTTY: true
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
