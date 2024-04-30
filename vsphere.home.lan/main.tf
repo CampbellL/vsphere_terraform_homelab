@@ -249,8 +249,8 @@ resource "vsphere_virtual_machine" "fedora_citrix_client" {
   name                       = "Fedora 39 Workstation - Citrix Client"
   resource_pool_id           = data.vsphere_resource_pool.esxi_host_01_default_resource_pool.id
   datastore_id               = data.vsphere_datastore.esxi01_ssd_vm_datastore01.id
-  num_cpus                   = 2
-  memory                     = 2048
+  num_cpus                   = 4
+  memory                     = 6000
   guest_id                   = "fedora64Guest"
   wait_for_guest_net_timeout = 0
 
